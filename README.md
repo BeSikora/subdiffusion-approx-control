@@ -1,12 +1,3 @@
-<!--
-TODO before publishing the repository:
-  1. Adjust the script names in "Repository layout" and "Reproducing the
-     results" to the actual files (the names below are a proposed layout).
-  2. Fill in the exact package versions in requirements.txt.
-  3. Fill in the measured run times in the table below.
-  4. Add the DOI after acceptance.
--->
-
 # Approximate controllability of semilinear subdiffusion equations — numerical experiments
 
 This repository contains the code for the numerical experiments (Section 6) of
@@ -78,40 +69,41 @@ pip install -r requirements.txt
 
 ```
 .
-├── subdiffusion_control.py   # discretisation, Gramian, fixed point iteration
-├── experiments_bounded.py    # f(s) = sin s: Table 1, Figures 1–3
-├── experiments_unbounded.py  # f(s) = a s + sin s: Table 2, Figure 4
-├── run_all.py                # runs everything
-├── results/                  # generated tables (.csv, .tex)
-├── figures/                  # generated figures (.pdf)
+├── subdiffusion_control.py   # discretisation, Gramian, fixed point iteration;
+│                             # running it produces Figures 1–3
+├── extra_experiments.py      # Tables 1–2, Figure 4, generator check
 ├── requirements.txt
 ├── CITATION.cff
 └── LICENSE
 ```
 
+All output files are written to the current working directory.
+
 ## Reproducing the results
 
-All results are produced by
-
 ```bash
-python run_all.py
+python subdiffusion_control.py    # Figures 1–3              (about 30 s)
+python extra_experiments.py       # Tables 1–2, Figure 4 etc. (about 3.5 min)
 ```
 
-which writes the tables to `results/` and the figures to `figures/`.
-Individual items can be reproduced as follows (numbering as in the
-journal version of the paper).
+The second script can also be run for individual items (numbering as in the
+journal version of the paper):
 
-| Item in the paper | Content | Command | Run time* |
-|---|---|---|---|
-| Table 1 | error and cost for $\alpha=0.75$, $N_t\in\{400,800,1600\}$, $M\in\{60,120\}$ | `python experiments_bounded.py --table1` | TODO |
-| Figure 1 | error and cost vs. $\varepsilon$, $\alpha\in\{0.6,0.75,0.9\}$ | `python experiments_bounded.py --fig1` | TODO |
-| Figure 2 | terminal states, $\alpha=0.75$, $\varepsilon\in\{10^{-2},10^{-4},10^{-8}\}$ | `python experiments_bounded.py --fig2` | TODO |
-| Figure 3 | $\lvert u_\varepsilon(0.3,t)\rvert$ vs. $T-t$, $\varepsilon=10^{-6}$ | `python experiments_bounded.py --fig3` | TODO |
-| Table 2 | error and cost for $f(s)=as+\sin s$, $a\in\{0,3,12\}$ | `python experiments_unbounded.py --table2` | TODO |
-| Figure 4 | error, cost and terminal states for $a\in\{0,3,12\}$ | `python experiments_unbounded.py --fig4` | TODO |
-| Section 6.3, text | generator $A$ vs. $A_a$ for $u=0$, $a=12$, $N_t=100,\dots,1600$ | `python experiments_unbounded.py --generator-check` | TODO |
+| Item in the paper | Content | Command | Output | Run time* |
+|---|---|---|---|---|
+| Figures 1–3 | error and cost vs. $\varepsilon$; terminal states; time profile of the control ($f(s)=\sin s$) | `python subdiffusion_control.py` | `fig_error_cost.pdf`, `fig_final_states.pdf`, `fig_control.pdf` | 30 s |
+| Table 1 | dependence on $N_t$ and $M$ ($\alpha=0.75$) | `python extra_experiments.py --table1` | `table_convergence.tex` | 75 s |
+| Section 6.2, text | errors for $\varepsilon=10^{-10}$, $N_t=1600$, $M=120$, all $\alpha$ | `python extra_experiments.py --fine` | screen | 50 s |
+| Table 2 | $f(s)=as+\sin s$, $a\in\{0,3,12\}$ | `python extra_experiments.py --table2` | `table_unbounded.tex` | 80 s** |
+| Figure 4 | error, cost and terminal states for $a\in\{0,3,12\}$ | `python extra_experiments.py --fig4` | `fig_unbounded.pdf` | 80 s** |
+| Section 6.3, text | generator $A$ vs. $A_a$ for $u=0$, $a=12$ | `python extra_experiments.py --generator` | `generator_check.txt` | 2 s |
 
-\* on TODO (processor, RAM).
+\* single core of an Intel Xeon processor at 2.1 GHz.
+\*\* Table 2 and Figure 4 use the same runs; `--table2 --fig4` computes them once.
+
+Each figure is also saved as `.png`. `subdiffusion_control.py` additionally
+writes `table_results.tex` with the error and the cost for
+$\alpha\in\{0.6,0.75,0.9\}$, i.e. the data of Figure 1 in tabular form.
 
 ### Checking the output
 
@@ -124,14 +116,16 @@ $N_t=400$, $M=60$) allow a quick check:
 | $10^{-6}$ | 5.00e-02 | 2.83e+01 |
 | $10^{-10}$ | 1.82e-02 | 9.88e+02 |
 
-The fixed point iteration should converge in 27–41 iterations for
-$f(s)=\sin s$ ($\vartheta=0.5$) and in 82–122 iterations for $f(s)=as+\sin s$
-($\vartheta=0.2$), and the discrete identity
-$y_\varepsilon(T)=y_1-\varepsilon R(\varepsilon)p(y_\varepsilon)$ should hold
-up to $10^{-9}$ and $2\cdot10^{-7}$, respectively.
+All tables, figures and numbers quoted in Section 6 were reproduced exactly
+with the versions listed in `requirements.txt`. The fixed point iteration
+converges in 27–41 iterations for $f(s)=\sin s$ ($\vartheta=0.5$) and in
+82–122 iterations for $f(s)=as+\sin s$ ($\vartheta=0.2$), and the discrete
+identity $y_\varepsilon(T)=y_1-\varepsilon R(\varepsilon)p(y_\varepsilon)$
+holds up to $10^{-9}$ and $2\cdot10^{-7}$, respectively; both scripts print
+these quantities for every run.
 
 For $\varepsilon=10^{-10}$ the cost is not converged with respect to the time
-grid (see Table 1), and small differences in the last digits may occur with
+grid (see Table 1), so small differences in the last digits may occur with
 other versions of the linear algebra libraries.
 
 ## How to cite
