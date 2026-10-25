@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: >-
+  If you use this code, please cite the accompanying article
+  (see "preferred-citation" below).
+title: >-
+  Numerical experiments for "Approximate controllability of semilinear
+  subdiffusion equations with the Caputo time derivative"
+type: software
+authors:
+  - family-names: Sikora
+    given-names: Beata
+    email: beata.sikora@polsl.pl
+    affiliation: >-
+      Department of Mathematical Methods in Technics and Informatics,
+      Silesian University of Technology, Gliwice, Poland
+    # TODO: uncomment and fill in (must be a full URL)
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-23"
+repository-code: "https://github.com/BeSikora/subdiffusion-approx-control"
+keywords:
+  - approximate controllability
+  - subdiffusion
+  - Caputo derivative
+  - Mittag-Leffler functions
+  - L1 scheme
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Sikora
+      given-names: Beata
+      email: beata.sikora@polsl.pl
+      affiliation: Silesian University of Technology
+  title: >-
+    Approximate controllability of semilinear subdiffusion equations with the
+    Caputo time derivative
+  journal: Fractional Calculus and Applied Analysis
+  status: submitted
+  year: 2026
+  # TODO after acceptance: replace "status: submitted" by volume, issue,
+  # start, end and doi, e.g.
+  # volume: 29
+  # issue: 6
+  # start: 1
+  # end: 26
+  # doi: "10.1007/s13540-0XX-XXXXX-X"

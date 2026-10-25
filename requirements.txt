@@ -1,0 +1,6 @@
+# Python >= 3.10
+# TODO: replace the lower bounds by the exact versions used for the paper,
+# e.g. the output of `pip freeze | grep -iE "numpy|scipy|matplotlib"`.
+numpy>=1.24
+scipy>=1.10        # remove if the code does not import scipy
+matplotlib>=3.7
