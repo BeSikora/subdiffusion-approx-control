@@ -13,8 +13,7 @@ authors:
     affiliation: >-
       Department of Mathematical Methods in Technics and Informatics,
       Silesian University of Technology, Gliwice, Poland
-    # TODO: uncomment and fill in (must be a full URL)
-    # orcid: "https://orcid.org/0000-0000-0000-0000"
+    orcid: "https://orcid.org/0000-0001-9471-4706"
 license: MIT
 version: 1.0.0
 date-released: "2026-10-23"
@@ -32,6 +31,7 @@ preferred-citation:
       given-names: Beata
       email: beata.sikora@polsl.pl
       affiliation: Silesian University of Technology
+      orcid: "https://orcid.org/0000-0001-9471-4706"
   title: >-
     Approximate controllability of semilinear subdiffusion equations with the
     Caputo time derivative
